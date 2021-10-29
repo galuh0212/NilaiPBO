@@ -1,0 +1,58 @@
+@extends('layouts.app')
+
+@section('title')
+    <title>Category Page</title>
+@endsection
+
+@section('content')
+<section class="section">
+    <div class="section-header">
+        <h1>Category Page</h1>
+         <div class="section-header-breadcrumb">
+            <div class="breadcrumb-item"><a href="#">Home</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+           <div class="card card-primary">
+                <div class="card-header">
+                    <a href="{{route('Category.create')}}" class="btn btn-primary">Add Category</a>
+                </div>
+                <div class="card-body">
+                    <div class="table table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>No</th>
+                                <th>Nama Kategori</th>
+                                <th>Keterangan</th>
+                        </thead>
+                        <tbody>
+                          @forelse ($category as $c)
+                              <tr>
+                                  <td>{{ $loop->iteration }}</td>
+                                  <td>{{ $c->name_category }}</td>
+                                  <td>{{$c->keterangan}}</td>
+                                  <td>
+                                      <a href="{{route('Category.edit', $c->id)}}" class="btn btn-outline-warning"><i class="fa fa-edit"></i></a>
+                                      <form action="{{route('Category.destroy',$c->id )}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                      </form>
+                                </td>
+                              </tr>
+                          @empty
+                              <tr>
+                                  <td colspan="3" class="text-center">Belum Ada Data</td>
+                              </tr>
+                          @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+</section>
+
+@endsection
